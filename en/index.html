@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskTimes | Personal Productivity OS</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         
@@ -15,7 +16,7 @@
             align-items: center;
             background: radial-gradient(circle at 20% 30%, #1e1b4b 0%, #0f172a 50%, #020617 100%);
             color: #ffffff;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
@@ -33,199 +34,197 @@
             position: relative;
             z-index: 10;
             text-align: center;
-            max-width: 850px;
-            padding: 20px;
+            width: 95%;
+            max-width: 1200px;
+            padding: 40px 20px;
             animation: fadeIn 1.5s ease-out;
-        }
-
-        /* --- LOGO TASK & TIMES JUMP EFFECT --- */
-        .logo-container, .times-container {
             display: flex;
+            flex-direction: column;
+            min-height: 90vh;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 15px;
         }
 
-        .letter-box, .times-letter {
-            display: inline-block;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        /* --- LOGO TASK --- */
+        .logo-container {
+            display: flex; justify-content: center; gap: clamp(10px, 2vw, 15px); margin-bottom: 20px;
         }
-
         .letter-box {
-            width: 60px;
-            height: 60px;
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: 900;
-            background: rgba(0, 0, 0, 0.2);
+            width: clamp(50px, 8vw, 65px); height: clamp(50px, 8vw, 65px); 
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%; display: flex; justify-content: center; align-items: center;
+            font-size: clamp(1.2rem, 3vw, 1.5rem); font-weight: 800; background: rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+        .letter-box:hover {
+            transform: translateY(-12px) scale(1.15);
+            background: #38bdf8;
+            border-color: #38bdf8;
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.4);
         }
 
+        /* --- CHỮ TIMES --- */
         .times-container {
-            font-size: clamp(4rem, 15vw, 8.5rem);
-            font-weight: 800;
-            letter-spacing: -4px;
-            line-height: 0.85;
-            margin-bottom: 20px;
+            font-size: clamp(4rem, 15vw, 9.5rem); font-weight: 800; letter-spacing: -3px;
+            line-height: 1; margin-bottom: 15px;
         }
-
         .times-letter {
+            display: inline-block;
+            transition: all 0.4s ease;
             background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        /* HOVER EFFECTS */
-        .letter-box:hover, .times-letter:hover {
-            transform: translateY(-18px) scale(1.15);
-            -webkit-text-fill-color: #38bdf8;
-            background-color: #38bdf8;
-            border-color: #38bdf8;
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
-        }
-
         .times-letter:hover {
-            background: none;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+            transform: scale(1.1) translateY(-5px);
+            -webkit-text-fill-color: #38bdf8;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.6));
         }
 
         .status-tag {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #38bdf8;
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            margin-bottom: 30px;
-            display: block;
+            font-size: clamp(0.6rem, 2vw, 0.75rem); font-weight: 600; color: #38bdf8;
+            text-transform: uppercase; letter-spacing: 5px; margin-bottom: 30px; display: block;
             animation: blinker 2s linear infinite;
         }
 
         .mission-desc {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
-            color: #94a3b8;
-            max-width: 650px;
-            margin: 0 auto 45px;
-            line-height: 1.8;
-            font-weight: 300;
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem); color: #94a3b8; max-width: 600px; margin: 0 auto 40px;
+            line-height: 1.6; font-weight: 300;
         }
 
-        /* NÚT BẤM CHUYỂN TRANG */
         .btn-test-mode {
-            padding: 18px 50px;
-            background: #ffffff;
-            color: #020617;
-            border-radius: 100px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: all 0.4s ease;
-            margin-bottom: 70px;
-            border: none;
-            cursor: pointer;
+            padding: 16px 45px; background: #ffffff; color: #020617; border-radius: 100px;
+            text-decoration: none; font-weight: 700; display: inline-flex; align-items: center;
+            gap: 10px; transition: 0.3s; margin: 0 auto 60px; width: fit-content;
+        }
+        .btn-test-mode:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255,255,255,0.1); }
+
+        /* --- FOOTER RESPONSIVE --- */
+        .custom-footer {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end;
+            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            padding-top: 25px; 
+            margin-top: auto;
+            width: 100%;
         }
 
-        .btn-test-mode:hover {
-            transform: translateY(-5px);
-            background: #38bdf8;
-            color: #0f172a;
-            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
+        .founder-box { display: flex; align-items: center; gap: 15px; text-align: left; }
+        .avatar-img {
+            width: clamp(55px, 10vw, 75px); height: clamp(55px, 10vw, 75px); border-radius: 50%;
+            border: 2px solid rgba(56, 189, 248, 0.5); object-fit: cover;
+        }
+        .role-label { 
+            font-size: 0.65rem; color: #38bdf8; text-transform: uppercase; 
+            letter-spacing: 2px; font-weight: 600; margin-bottom: 4px;
+        }
+        .founder-name { 
+            font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 700; color: #ffffff; 
+            letter-spacing: 1px; line-height: 1.2;
+        }
+        
+        .copyright-text {
+            font-size: 0.6rem; color: rgba(148, 163, 184, 0.5);
+            margin-top: 4px; letter-spacing: 0.5px;
         }
 
-        /* FOOTER TIME BLOCK */
-        .footer-group {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 30px;
-        }
+        .social-links { display: flex; gap: 18px; margin-top: 12px; }
+        .social-link { color: rgba(148, 163, 184, 0.7); font-size: 1.3rem; text-decoration: none; transition: 0.3s; }
+        .social-link:hover { color: #38bdf8; transform: translateY(-3px); }
 
-        #digital-clock {
-            font-size: clamp(2.5rem, 7vw, 3.2rem);
-            font-weight: 800;
+        /* --- CLOCK RESPONSIVE --- */
+        .datetime-box { text-align: right; display: flex; flex-direction: column; justify-content: flex-end; }
+        #clock { 
+            font-size: clamp(1.8rem, 5vw, 2.8rem); 
+            font-weight: 800; color: #ffffff; 
+            line-height: 1; margin-bottom: 5px;
             letter-spacing: 2px;
         }
-
-        #date-display {
-            font-size: clamp(1rem, 3vw, 1.4rem);
-            font-weight: 700;
-            color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 25px;
+        #date { 
+            font-size: clamp(0.9rem, 2.5vw, 1.25rem); color: #94a3b8; font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
-        .operated-info {
-            font-size: 0.7rem;
-            color: rgba(148, 163, 184, 0.6);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blinker { 50% { opacity: 0.3; } }
+
+        /* --- MOBILE ADJUSTMENTS --- */
+        @media (max-width: 768px) {
+            .custom-footer { 
+                flex-direction: column; 
+                gap: 40px; 
+                text-align: center; 
+                align-items: center;
+                padding-bottom: 20px;
+            }
+            .founder-box { flex-direction: column; text-align: center; }
+            .datetime-box { text-align: center; width: 100%; }
+            .social-links { justify-content: center; }
+            .hero-section { min-height: 95vh; }
+        }
     </style>
 </head>
 <body>
 
     <div class="hero-section">
         <div class="logo-container">
-            <div class="letter-box">T</div>
-            <div class="letter-box">A</div>
-            <div class="letter-box">S</div>
-            <div class="letter-box">K</div>
+            <div class="letter-box">T</div><div class="letter-box">A</div>
+            <div class="letter-box">S</div><div class="letter-box">K</div>
         </div>
 
         <div class="times-container">
-            <span class="times-letter">T</span>
-            <span class="times-letter">i</span>
-            <span class="times-letter">m</span>
-            <span class="times-letter">e</span>
-            <span class="times-letter">s</span>
+            <span class="times-letter">T</span><span class="times-letter">i</span><span class="times-letter">m</span><span class="times-letter">e</span><span class="times-letter">s</span>
         </div>
 
         <span class="status-tag">Public release coming soon</span>
         
         <p class="mission-desc">
-            The next-generation <strong>Personal Productivity OS</strong>. 
-            Seamlessly integrating tools, documents, and AI-driven insights.
+            The next-generation Personal Productivity OS. Seamlessly integrating tools, documents, and AI-driven insights.
         </p>
 
         <a href="/login" class="btn-test-mode">
-            Enter TEST MODE
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-                <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
+            Enter TEST MODE &rarr;
         </a>
 
-        <div class="footer-group">
-            <div id="digital-clock">00:00:00</div>
-            <div id="date-display">...</div>
-            <div class="operated-info">OPERATED BY NGUYEN NGOC TUYEN</div>
+        <div class="custom-footer">
+            <div class="founder-box">
+                <img src="ava-web.jpg" alt="Founder" class="avatar-img">
+                <div class="founder-text">
+                    <div class="role-label">Founder & Developer</div>
+                    <div class="founder-name">NGUYEN NGOC TUYEN</div>
+                    <div class="copyright-text">© 2025 - <span id="current-year"></span> TaskTimes. All rights reserved.</div>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/tuyennguyenvn/" target="_blank" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://web.facebook.com/tuyen.nguyen.fb.vn/" target="_blank" class="social-link" title="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="mailto:nntuyenvn@gmail.com" class="social-link" title="Email Me">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="datetime-box">
+                <div id="clock">00:00:00</div>
+                <div id="date">Loading...</div>
+            </div>
         </div>
     </div>
 
     <script>
-        function updateClock() {
+        function updateDateTime() {
             const now = new Date();
-            // Định dạng đồng hồ 24h
-            document.getElementById('digital-clock').textContent = now.toLocaleTimeString('en-GB');
-            
-            // Định dạng ngày tháng đậm (Tuesday, March 24, 2026)
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('date-display').textContent = now.toLocaleDateString('en-US', options);
+            document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB', { hour12: false });
+            const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
+            document.getElementById('current-year').textContent = now.getFullYear();
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
     </script>
 </body>
 </html>
