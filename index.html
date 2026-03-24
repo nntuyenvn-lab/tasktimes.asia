@@ -57,7 +57,7 @@
         <div class="footer-links">
             For existing users, get started by requesting a <br>
             magic link via email or <a onclick="handlePasswordPrompt()">inputting password</a><br>
-            New account? <a href="#">Request an invite</a>
+            New account? <a href="request.html">Request an invite</a>
         </div>
         
         <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
@@ -73,7 +73,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
         import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
-        // SAO CHÉP CHÍNH XÁC TỪ HÌNH ẢNH FIREBASE CONSOLE CỦA BẠN (image_d41e4b.png)
+        // CONFIG CHÍNH XÁC TỪ ẢNH FIREBASE CỦA BẠN
         const firebaseConfig = {
             apiKey: "AIzaSyDxbNqqxoWr9nBMYujSXnqD-KnYPoOPMd0", 
             authDomain: "tasktimes-vn.firebaseapp.com",
@@ -100,7 +100,7 @@
         };
 
         window.handlePasswordPrompt = () => {
-            alert("Password login is being integrated. Please use Magic Link for now.");
+            alert("Password login is coming soon. Please use Magic Link.");
         };
 
         window.handleLogout = () => signOut(auth);
