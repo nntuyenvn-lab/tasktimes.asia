@@ -4,124 +4,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TaskTimes | Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body {
-            height: 100vh; display: flex; justify-content: center; align-items: center;
-            background: radial-gradient(circle at center, #1e3c72 0%, #0f2027 100%);
-            color: white; overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            color: white;
         }
-        .container {
-            text-align: center; background: rgba(44, 62, 80, 0.4); padding: 50px 30px;
-            border-radius: 25px; backdrop-filter: blur(15px); width: 90%; max-width: 420px;
-            border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            padding: 20px;
         }
-        .logo-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
-        .circle {
-            width: 42px; height: 42px; border: 2px solid #00d2ff; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.2rem; font-weight: 600; color: #00d2ff;
+        /* Logo TASK lớn theo phong cách d65d42 */
+        .logo-text {
+            font-size: 5.5rem;
+            font-weight: 800;
+            line-height: 0.9;
+            margin-bottom: 10px;
+            letter-spacing: -3px;
+            background: linear-gradient(to bottom, #ffffff 60%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .brand-name { font-size: 3rem; font-weight: 600; margin-bottom: 5px; letter-spacing: 1px; }
-        .subtitle { font-size: 0.9rem; color: #00d2ff; margin-bottom: 35px; }
-        .input-box {
-            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: none;
-            background: rgba(255, 255, 255, 0.1); color: #fff; text-align: center; font-size: 1rem; outline: none;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .subtitle {
+            color: #38bdf8;
+            font-size: 0.95rem;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
         }
-        .btn {
-            width: 100%; padding: 15px; border: none; border-radius: 10px; background: #00a8ff;
-            color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+        /* Input fields trắng tinh khôi theo d5d67e */
+        .input-container {
+            position: relative;
+            margin-bottom: 15px;
         }
-        .btn:hover { background: #00d2ff; transform: translateY(-2px); }
-        .footer-links { margin-top: 30px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.8; }
-        .footer-links a { color: #00d2ff; text-decoration: none; cursor: pointer; }
-        .operated-by { margin-top: 35px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.3); letter-spacing: 0.5px; }
-        #dashboard { display: none; }
+        .input-field {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+            background: #ffffff;
+            color: #1e293b;
+        }
+        .input-field::placeholder { color: #94a3b8; }
+        /* Icon con mắt gạch chéo theo d65d42 */
+        .eye-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #1e293b;
+            display: flex;
+        }
+        .error-text {
+            color: #ef4444;
+            font-size: 0.85rem;
+            text-align: left;
+            margin: -10px 0 15px 5px;
+            display: none; /* Mặc định ẩn */
+        }
+        .forgot-link {
+            color: #38bdf8;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 30px;
+        }
+        .forgot-link:hover { text-decoration: underline; }
+        /* Nút Sign In màu xanh teal theo d5d67e */
+        .btn-signin {
+            width: 100%;
+            padding: 14px;
+            background: #1e7a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+        .btn-signin:hover { background: #16606d; }
+        .footer-text {
+            margin-top: 35px;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            color: #cbd5e1;
+        }
+        .footer-text a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
+    <div class="login-box">
+        <h1 class="logo-text">TASK</h1>
+        <p class="subtitle">By invitation only</p>
 
-    <div id="login-page" class="container">
-        <div class="logo-container">
-            <div class="circle">T</div><div class="circle">A</div><div class="circle">S</div><div class="circle">K</div>
+        <div class="input-container">
+            <input type="email" id="email" class="input-field" placeholder="Email*">
         </div>
-        <div class="brand-name">Times</div>
-        <div class="subtitle">By invitation only</div>
-        
-        <input type="email" id="user-email" class="input-box" placeholder="Email*">
-        <button id="magic-btn" class="btn" onclick="handleMagicLink()">🔗 Request a magic link</button>
-        
-        <div class="footer-links">
-            For existing users, get started by requesting a <br>
-            magic link via email or <a onclick="handlePasswordPrompt()">inputting password</a><br>
+
+        <div class="input-container">
+            <input type="password" id="password" class="input-field" placeholder="Password*">
+            <span class="eye-icon" id="toggleEye">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+            </span>
+        </div>
+        <div id="error-msg" class="error-text">Missing password</div>
+
+        <a href="#" class="forgot-link">Forgot password?</a>
+
+        <button class="btn-signin" id="signInBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M13.8 12H3"/>
+            </svg>
+            Sign in
+        </button>
+
+        <div class="footer-text">
+            For existing users, get started by inputting email and password or <a href="#">requesting magic link</a><br>
             New account? <a href="request.html">Request an invite</a>
         </div>
-        
-        <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
     </div>
 
-    <div id="dashboard" class="container">
-        <h2 id="welcome-msg">Welcome!</h2>
-        <button class="btn" style="background: #e74c3c; margin-top: 20px;" onclick="handleLogout()">Sign Out</button>
-        <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-        import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-
-        // CONFIG CHÍNH XÁC TỪ ẢNH FIREBASE CỦA BẠN
-        const firebaseConfig = {
-            apiKey: "AIzaSyDxbNqqxoWr9nBMYujSXnqD-KnYPoOPMd0", 
-            authDomain: "tasktimes-vn.firebaseapp.com",
-            projectId: "tasktimes-vn",
-            storageBucket: "tasktimes-vn.firebasestorage.app",
-            messagingSenderId: "561471525471",
-            appId: "1:561471525471:web:45f9ec52ac1c2f1fa7c1ea",
-            measurementId: "G-W2S1N7DHSF"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        window.handleMagicLink = () => {
-            const email = document.getElementById('user-email').value;
-            if(!email) return alert("Please enter your email!");
-            sendSignInLinkToEmail(auth, email, {
-                url: window.location.origin + "/login",
-                handleCodeInApp: true,
-            }).then(() => {
-                window.localStorage.setItem('emailForSignIn', email);
-                alert("Success! Check your email.");
-            }).catch(err => alert(err.message));
-        };
-
-        window.handlePasswordPrompt = () => {
-            alert("Password login is coming soon. Please use Magic Link.");
-        };
-
-        window.handleLogout = () => signOut(auth);
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('welcome-msg').innerText = "Hello, " + (user.displayName || user.email);
-            } else {
-                document.getElementById('login-page').style.display = 'block';
-                document.getElementById('dashboard').style.display = 'none';
-            }
-        });
-
-        if (isSignInWithEmailLink(auth, window.location.href)) {
-            let email = window.localStorage.getItem('emailForSignIn') || window.prompt('Confirm email:');
-            signInWithEmailLink(auth, email, window.location.href)
-                .then(() => { window.localStorage.removeItem('emailForSignIn'); })
-                .catch((error) => alert(error.message));
-        }
-    </script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
