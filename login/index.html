@@ -16,48 +16,32 @@
             text-align: center; background: rgba(30, 41, 59, 0.5); padding: 50px 35px;
             border-radius: 28px; backdrop-filter: blur(15px); width: 95%; max-width: 420px;
             border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            animation: fadeIn 0.8s ease-out;
         }
-
-        /* --- PHẦN LOGO TASK --- */
         .logo-container { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
         .circle {
             width: 55px; height: 55px; border: 3px solid #38bdf8; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             font-size: 1.6rem; font-weight: 800; color: #38bdf8;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
         }
-
         .brand-name { font-size: 3.5rem; font-weight: 700; margin-bottom: 5px; letter-spacing: -1px; }
         .subtitle { font-size: 0.9rem; color: #38bdf8; margin-bottom: 35px; letter-spacing: 1px; }
-
         .input-box {
             width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: none;
             background: rgba(255, 255, 255, 0.1); color: #fff; text-align: center; font-size: 1rem; outline: none;
             border: 1px solid rgba(255, 255, 255, 0.2); transition: 0.3s;
         }
-        .input-box:focus { border-color: #38bdf8; background: rgba(255, 255, 255, 0.15); }
-
+        .input-box:focus { border-color: #38bdf8; }
         .btn {
             width: 100%; padding: 15px; border: none; border-radius: 10px; background: #0284c7;
             color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
         .btn:hover { background: #0ea5e9; transform: translateY(-2px); }
-
-        .footer-links { margin-top: 30px; font-size: 0.85rem; color: #94a3b8; line-height: 1.8; }
-        .footer-links a { color: #38bdf8; text-decoration: none; cursor: pointer; font-weight: 600; }
-        
-        /* Nút Back to Home */
-        .back-home {
-            margin-top: 25px; display: inline-flex; align-items: center; gap: 8px;
-            color: #64748b; text-decoration: none; font-size: 0.8rem; transition: 0.3s;
-        }
-        .back-home:hover { color: #ffffff; }
-
-        .operated-by { margin-top: 35px; font-size: 0.75rem; color: rgba(148, 163, 184, 0.3); letter-spacing: 0.5px; }
+        .footer-links { margin-top: 30px; font-size: 0.85rem; color: #94a3b8; }
+        .footer-links a { color: #38bdf8; text-decoration: none; font-weight: 600; cursor: pointer; }
+        .back-home { margin-top: 25px; display: block; color: #64748b; text-decoration: none; font-size: 0.8rem; }
+        .operated-by { margin-top: 35px; font-size: 0.75rem; color: rgba(148, 163, 184, 0.3); }
         #dashboard { display: none; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -73,22 +57,17 @@
         <button id="magic-btn" class="btn" onclick="handleMagicLink()">🔗 Request a magic link</button>
         
         <div class="footer-links">
-            New account? <a href="/request.html">Request an invite</a><br>
-            Or <a onclick="handleGoogleSignIn()">Sign in with Google</a>
+            Existing users? <a onclick="handleGoogleSignIn()">Sign in with Google</a><br>
+            New account? <a href="/request.html">Request an invite</a>
         </div>
-
-        <a href="/en" class="back-home">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            Back to Home
-        </a>
         
+        <a href="/en" class="back-home">← Back to Home</a>
         <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
     </div>
 
     <div id="dashboard" class="container">
         <h2 id="welcome-msg">Welcome!</h2>
         <button class="btn" style="background: #ef4444; margin-top: 20px;" onclick="handleLogout()">Sign Out</button>
-        <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
     </div>
 
     <script type="module">
@@ -109,17 +88,22 @@
         const auth = getAuth(app);
         const provider = new GoogleAuthProvider();
 
+        // HÀM XỬ LÝ CHÍNH: Gửi link và quay về trang chủ
         window.handleMagicLink = () => {
             const email = document.getElementById('user-email').value;
             if(!email) return alert("Please enter your email!");
-            // Đảm bảo URL quay về đúng trang login sau khi nhấn link email
-            const actionCodeSettings = {
+            
+            sendSignInLinkToEmail(auth, email, {
                 url: window.location.origin + '/login',
                 handleCodeInApp: true,
-            };
-            sendSignInLinkToEmail(auth, email, actionCodeSettings).then(() => {
+            }).then(() => {
                 window.localStorage.setItem('emailForSignIn', email);
-                alert("Success! Check your email.");
+                
+                // 1. Hiển thị thông báo thành công
+                alert("Success! Check your email."); 
+                
+                // 2. Sau khi nhấn OK, trình duyệt thực hiện dòng dưới đây:
+                window.location.href = "/en"; 
             }).catch(err => alert(err.message));
         };
 
