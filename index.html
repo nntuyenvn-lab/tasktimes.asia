@@ -18,27 +18,37 @@
             border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* --- PHẦN LOGO TASK ĐÃ ĐƯỢC LÀM TO VÀ ĐẸP HƠN --- */
+        /* --- PHẦN LOGO TASK --- */
         .logo-container { 
             display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; 
         }
         .circle {
-            width: 55px;  /* Tăng kích thước */
-            height: 55px; /* Tăng kích thước */
-            border: 3px solid #38bdf8; /* Viền dày và sắc nét hơn */
-            border-radius: 50%;
+            width: 55px; height: 55px; 
+            border: 3px solid #38bdf8; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             font-size: 1.6rem; font-weight: 800; color: #38bdf8;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3); /* Hiệu ứng phát sáng */
-            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+            transition: 0.3s ease;
+            cursor: pointer;
         }
         .circle:hover {
             transform: scale(1.1);
             background: rgba(56, 189, 248, 0.1);
         }
-        .brand-name { font-size: 3.5rem; font-weight: 700; margin-bottom: 5px; letter-spacing: -1px; }
+
+        /* Hiệu ứng nhảy cho chữ Times */
+        .brand-name { 
+            font-size: 3.5rem; font-weight: 700; margin-bottom: 5px; letter-spacing: -1px; 
+            transition: 0.3s ease;
+            display: inline-block; /* Quan trọng để hiệu ứng scale hoạt động chuẩn */
+            cursor: pointer;
+        }
+        .brand-name:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
         .subtitle { font-size: 0.9rem; color: #38bdf8; margin-bottom: 35px; letter-spacing: 1px; }
-        /* ---------------------------------------------- */
 
         .input-box {
             width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: none;
@@ -76,7 +86,7 @@
         
         <div class="footer-links">
             For existing users, get started by requesting a <br>
-            magic link via email or <a onclick="handlePasswordPrompt()">inputting password</a><br>
+            magic link via email or <a onclick="handleGoogleSignIn()">Sign in with Google</a><br>
             New account? <a href="request.html">Request an invite</a>
         </div>
         
@@ -91,7 +101,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-        import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+        import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDxbNqqxoWr9nBMYujSXnqD-KnYPoOPMd0", 
@@ -105,6 +115,7 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
 
         window.handleMagicLink = () => {
             const email = document.getElementById('user-email').value;
@@ -118,8 +129,14 @@
             }).catch(err => alert(err.message));
         };
 
-        window.handlePasswordPrompt = () => {
-            alert("Password login is coming soon. Please use Magic Link.");
+        // Hàm xử lý đăng nhập Google
+        window.handleGoogleSignIn = () => {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    console.log("Logged in with Google");
+                }).catch((error) => {
+                    alert("Google Sign-In Error: " + error.message);
+                });
         };
 
         window.handleLogout = () => signOut(auth);
