@@ -13,7 +13,7 @@
             color: white; overflow: hidden;
         }
         .container {
-            text-align: center; background: rgba(44, 62, 80, 0.5); padding: 50px 30px;
+            text-align: center; background: rgba(44, 62, 80, 0.5); padding: 40px 30px;
             border-radius: 25px; backdrop-filter: blur(15px); width: 90%; max-width: 400px;
             border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
@@ -27,7 +27,7 @@
         .subtitle { font-size: 0.85rem; color: #00d2ff; margin-bottom: 30px; }
         .input-box {
             width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: none;
-            background: rgba(255, 255, 255, 0.1); color: white; text-align: center; font-size: 1rem; outline: none;
+            background: #fff; color: #333; text-align: center; font-size: 1rem; outline: none;
         }
         .btn {
             width: 100%; padding: 14px; border: none; border-radius: 10px; background: #00a8ff;
@@ -38,15 +38,7 @@
         .btn:disabled { background: #555; cursor: not-allowed; }
         .footer-links { margin-top: 25px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
         .footer-links a { color: #00d2ff; text-decoration: none; cursor: pointer; }
-        
-        /* Phần chữ mới thêm vào */
-        .operated-by {
-            margin-top: 30px;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 0.5px;
-        }
-
+        .operated-by { margin-top: 25px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.5px; }
         #dashboard { display: none; }
         .user-pic { width: 70px; border-radius: 50%; border: 2px solid #00d2ff; margin-bottom: 10px; }
     </style>
@@ -63,10 +55,8 @@
         <button id="magic-btn" class="btn" onclick="handleMagicLink()">🔗 Request a magic link</button>
         <div class="footer-links">
             For existing users, get started by requesting a <br>
-            magic link via email or <a onclick="handleGoogleLogin()">sign in with Google</a><br>
-            New account? <a href="#">Request an invite</a>
+            magic link via email or <a onclick="handleGoogleLogin()">sign in with Google</a>
         </div>
-        
         <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
     </div>
 
@@ -82,7 +72,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
         import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
-        // Firebase Config lấy từ ảnh của bạn
+        // CONFIG CHÍNH XÁC 100% TỪ FIREBASE CỦA BẠN
         const firebaseConfig = {
             apiKey: "AIzaSyDxBNqqxoWr9nBMYujSXnqD-KnYPoOPMD0",
             authDomain: "tasktimes-vn.firebaseapp.com",
@@ -96,64 +86,58 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        const updateURL = (path) => {
-            window.history.pushState({}, "", path);
-        };
+        const updateURL = (path) => { window.history.pushState({}, "", path); };
 
+        // Gắn hàm vào window để gọi từ HTML
         window.handleMagicLink = () => {
             const email = document.getElementById('user-email').value;
             const btn = document.getElementById('magic-btn');
             if(!email) return alert("Please enter your email!");
-
-            btn.innerText = "Sending...";
-            btn.disabled = true;
+            btn.innerText = "Sending..."; btn.disabled = true;
 
             sendSignInLinkToEmail(auth, email, {
-                url: window.location.origin + "/login", 
+                url: window.location.origin + "/login",
                 handleCodeInApp: true,
             })
             .then(() => {
                 window.localStorage.setItem('emailForSignIn', email);
-                alert("✨ Success! Check your email: " + email);
-                btn.innerText = "🔗 Request a magic link";
-                btn.disabled = false;
+                alert("✨ Success! Check email: " + email);
+                btn.innerText = "🔗 Request a magic link"; btn.disabled = false;
             })
             .catch((error) => {
-                alert("Error: " + error.message);
-                btn.disabled = false;
-                btn.innerText = "🔗 Request a magic link";
+                alert("Firebase Error: " + error.message);
+                btn.innerText = "🔗 Request a magic link"; btn.disabled = false;
             });
         };
-
-        if (isSignInWithEmailLink(auth, window.location.href)) {
-            let email = window.localStorage.getItem('emailForSignIn') || window.prompt('Confirm your email:');
-            signInWithEmailLink(auth, email, window.location.href)
-                .then(() => {
-                    window.localStorage.removeItem('emailForSignIn');
-                    updateURL("/");
-                })
-                .catch((error) => alert(error.message));
-        }
 
         window.handleGoogleLogin = () => {
             signInWithPopup(auth, new GoogleAuthProvider()).catch((e) => alert(e.message));
         };
 
+        window.handleLogout = () => signOut(auth).then(() => updateURL("/login"));
+
         onAuthStateChanged(auth, (user) => {
+            const loginPage = document.getElementById('login-page');
+            const dashboard = document.getElementById('dashboard');
             if (user) {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
+                loginPage.style.display = 'none';
+                dashboard.style.display = 'block';
                 document.getElementById('welcome-msg').innerText = "Hello, " + (user.displayName || user.email);
-                document.getElementById('user-img').src = user.photoURL || 'https://via.placeholder.com/70';
+                document.getElementById('user-img').src = user.photoURL || '';
                 if(window.location.pathname === "/login") updateURL("/");
             } else {
-                document.getElementById('login-page').style.display = 'block';
-                document.getElementById('dashboard').style.display = 'none';
+                loginPage.style.display = 'block';
+                dashboard.style.display = 'none';
                 if(window.location.pathname !== "/login") updateURL("/login");
             }
         });
 
-        window.handleLogout = () => signOut(auth).then(() => updateURL("/login"));
+        if (isSignInWithEmailLink(auth, window.location.href)) {
+            let email = window.localStorage.getItem('emailForSignIn') || window.prompt('Confirm email:');
+            signInWithEmailLink(auth, email, window.location.href)
+                .then(() => { window.localStorage.removeItem('emailForSignIn'); updateURL("/"); })
+                .catch((error) => alert(error.message));
+        }
     </script>
 </body>
 </html>
