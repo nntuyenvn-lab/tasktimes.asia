@@ -3,16 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskTimes | By Invitation Only</title>
+    <title>TaskTimes | Official</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
         body {
             height: 100vh;
             display: flex;
@@ -20,220 +14,131 @@
             align-items: center;
             background: radial-gradient(circle at center, #1e3c72 0%, #0f2027 100%);
             color: white;
+            overflow: hidden;
         }
-
         .container {
             text-align: center;
-            background: rgba(44, 62, 80, 0.7);
+            background: rgba(44, 62, 80, 0.5);
             padding: 50px 30px;
             border-radius: 25px;
             backdrop-filter: blur(15px);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             width: 90%;
-            max-width: 420px;
+            max-width: 400px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-
-        .logo-wrap {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 10px;
+        .logo-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
+        .circle {
+            width: 42px; height: 42px; border: 2px solid #00d2ff; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.4rem; font-weight: 600; color: #00d2ff;
         }
-
-        .logo-circle {
-            width: 45px;
-            height: 45px;
-            border: 2px solid #00d2ff;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #00d2ff;
-        }
-
-        .brand-name {
-            font-size: 2.8rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-            letter-spacing: 2px;
-        }
-
-        .subtitle {
-            font-size: 0.85rem;
-            color: #00d2ff;
-            margin-bottom: 35px;
-            font-weight: 300;
-        }
-
+        .brand-name { font-size: 2.5rem; font-weight: 600; margin-bottom: 5px; letter-spacing: 1px; }
+        .subtitle { font-size: 0.85rem; color: #00d2ff; margin-bottom: 30px; }
         .input-box {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            border: none;
-            outline: none;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1rem;
-            text-align: center;
+            width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: none;
+            background: rgba(255, 255, 255, 0.1); color: white; text-align: center; font-size: 1rem;
         }
-
-        .input-box::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
         .btn {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            background: #00a8ff;
-            color: white;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+            width: 100%; padding: 14px; border: none; border-radius: 10px; background: #00a8ff;
+            color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-
-        .btn:hover {
-            background: #00d2ff;
-            transform: translateY(-2px);
-        }
-
-        .links-group {
-            margin-top: 25px;
-            font-size: 0.8rem;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .links-group a {
-            color: #00d2ff;
-            text-decoration: none;
-        }
-
-        .author {
-            margin-top: 30px;
-            font-size: 0.75rem;
-            opacity: 0.5;
-        }
-
-        /* Dashboard View */
-        #dashboard-section { display: none; }
-        .user-photo { width: 70px; border-radius: 50%; border: 3px solid #00d2ff; margin-bottom: 15px; }
-
+        .btn:hover { background: #00d2ff; transform: translateY(-2px); }
+        .btn:disabled { background: #555; cursor: not-allowed; }
+        .footer-links { margin-top: 25px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
+        .footer-links a { color: #00d2ff; text-decoration: none; }
+        #dashboard { display: none; }
+        .user-pic { width: 70px; border-radius: 50%; border: 2px solid #00d2ff; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <div id="login-section" class="container">
-        <div class="logo-wrap">
-            <div class="logo-circle">T</div>
-            <div class="logo-circle">A</div>
-            <div class="logo-circle">S</div>
-            <div class="logo-circle">K</div>
+    <div id="login-page" class="container">
+        <div class="logo-container">
+            <div class="circle">T</div><div class="circle">A</div><div class="circle">S</div><div class="circle">K</div>
         </div>
         <div class="brand-name">Times</div>
         <div class="subtitle">By invitation only</div>
-        
-        <input type="email" id="email" class="input-box" placeholder="Email*">
-        
-        <button class="btn" onclick="sendMagicLink()">
-            🔗 Request a magic link
-        </button>
-
-        <div class="links-group">
+        <input type="email" id="user-email" class="input-box" placeholder="Email*">
+        <button id="magic-btn" class="btn" onclick="handleMagicLink()">🔗 Request a magic link</button>
+        <div class="footer-links">
             For existing users, get started by requesting a <br>
-            magic link via email or <a href="#" onclick="loginWithGoogle()">sign in with Google</a><br>
+            magic link via email or <a href="#" onclick="handleGoogleLogin()">sign in with Google</a><br>
             New account? <a href="#">Request an invite</a>
         </div>
-
-        <div class="author">Created by Nguyen Ngoc Tuyen</div>
     </div>
 
-    <div id="dashboard-section" class="container">
-        <img id="user-photo" class="user-photo" src="" alt="">
-        <h2 id="user-name">Welcome!</h2>
-        <p style="margin: 20px 0; opacity: 0.8;">Your dashboard is being prepared.</p>
-        <button class="btn" style="background: #e74c3c;" onclick="logout()">Sign Out</button>
+    <div id="dashboard" class="container">
+        <img id="user-img" class="user-pic" src="" alt="">
+        <h2 id="welcome-msg">Welcome!</h2>
+        <p style="margin: 20px 0; opacity: 0.7;">You have successfully logged in.</p>
+        <button class="btn" style="background: #e74c3c;" onclick="handleLogout()">Sign Out</button>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
         import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
-        // Your Firebase config
+        // Cấu hình chính xác từ image_c8c1fd.png
         const firebaseConfig = {
-            apiKey: "AIzaSyDxBNqqxoWr9nBMYujSXnqD-KnYPoOPMD8",
+            apiKey: "AIzaSyDxBNqqxoWr9nBMYujSXnqD-KnYPoOPMD0",
             authDomain: "tasktimes-vn.firebaseapp.com",
             projectId: "tasktimes-vn",
             storageBucket: "tasktimes-vn.firebasestorage.app",
             messagingSenderId: "561471525471",
-            appId: "1:561471525471:web:45f9ec52ac1c2f1fa7c1ea"
+            appId: "1:561471525471:web:45f9ec52ac1c2f1fa7c1ea",
+            measurementId: "G-W2S1N7DH5F"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // --- 1. MAGIC LINK LOGIC ---
-        window.sendMagicLink = () => {
-            const email = document.getElementById('email').value;
-            if(!email) return alert("Please enter your email!");
+        window.handleMagicLink = () => {
+            const email = document.getElementById('user-email').value;
+            const btn = document.getElementById('magic-btn');
+            if(!email) return alert("Please enter your email address!");
+            btn.innerText = "Sending...";
+            btn.disabled = true;
 
-            const actionCodeSettings = {
-                // Link will lead back to your Vercel URL
-                url: window.location.href, 
+            sendSignInLinkToEmail(auth, email, {
+                url: window.location.href,
                 handleCodeInApp: true,
-            };
-
-            sendSignInLinkToEmail(auth, email, actionCodeSettings)
-                .then(() => {
-                    window.localStorage.setItem('emailForSignIn', email);
-                    alert('Check your email! The magic link is on its way.');
-                })
-                .catch((error) => alert("Error: " + error.message));
+            })
+            .then(() => {
+                window.localStorage.setItem('emailForSignIn', email);
+                alert("✨ Success! A magic link has been sent to " + email);
+                btn.innerText = "🔗 Request a magic link";
+                btn.disabled = false;
+            })
+            .catch((error) => {
+                alert("Error: " + error.message);
+                btn.disabled = false;
+                btn.innerText = "🔗 Request a magic link";
+            });
         };
 
-        // Auto-check if user clicked the link in their email
         if (isSignInWithEmailLink(auth, window.location.href)) {
-            let email = window.localStorage.getItem('emailForSignIn');
-            if (!email) email = window.prompt('Please confirm your email for sign-in:');
-            
+            let email = window.localStorage.getItem('emailForSignIn') || window.prompt('Confirm your email:');
             signInWithEmailLink(auth, email, window.location.href)
                 .then(() => window.localStorage.removeItem('emailForSignIn'))
-                .catch((error) => alert("Sign-in link error: " + error.message));
+                .catch((error) => alert(error.message));
         }
 
-        // --- 2. GOOGLE LOGIN LOGIC ---
-        window.loginWithGoogle = () => {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider).catch((e) => alert(e.message));
+        window.handleGoogleLogin = () => {
+            signInWithPopup(auth, new GoogleAuthProvider()).catch((e) => alert(e.message));
         };
 
-        // --- 3. AUTH STATE CONTROL ---
         onAuthStateChanged(auth, (user) => {
-            const loginSection = document.getElementById('login-section');
-            const dashboardSection = document.getElementById('dashboard-section');
+            document.getElementById('login-page').style.display = user ? 'none' : 'block';
+            document.getElementById('dashboard').style.display = user ? 'block' : 'none';
             if (user) {
-                loginSection.style.display = 'none';
-                dashboardSection.style.display = 'block';
-                document.getElementById('user-name').innerText = "Hello, " + (user.displayName || user.email);
-                document.getElementById('user-photo').src = user.photoURL || 'https://via.placeholder.com/70';
-            } else {
-                loginSection.style.display = 'block';
-                dashboardSection.style.display = 'none';
+                document.getElementById('welcome-msg').innerText = "Hello, " + (user.displayName || user.email);
+                document.getElementById('user-img').src = user.photoURL || 'https://via.placeholder.com/70';
             }
         });
 
-        window.logout = () => signOut(auth);
+        window.handleLogout = () => signOut(auth);
     </script>
 </body>
 </html>
