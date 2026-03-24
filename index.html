@@ -56,7 +56,7 @@
         
         <div class="footer-links">
             For existing users, get started by requesting a <br>
-            magic link via email or <a onclick="handleGoogleLogin()">sign in with Google</a><br>
+            magic link via email or <a onclick="handlePasswordPrompt()">inputting password</a><br>
             New account? <a href="#">Request an invite</a>
         </div>
         
@@ -71,9 +71,9 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-        import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+        import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
 
-        // SAO CHÉP CHÍNH XÁC TỪ HÌNH ẢNH FIREBASE CONSOLE CỦA BẠN
+        // SAO CHÉP CHÍNH XÁC TỪ HÌNH ẢNH FIREBASE CONSOLE CỦA BẠN (image_d41e4b.png)
         const firebaseConfig = {
             apiKey: "AIzaSyDxbNqqxoWr9nBMYujSXnqD-KnYPoOPMd0", 
             authDomain: "tasktimes-vn.firebaseapp.com",
@@ -99,7 +99,10 @@
             }).catch(err => alert(err.message));
         };
 
-        window.handleGoogleLogin = () => signInWithPopup(auth, new GoogleAuthProvider()).catch(err => alert(err.message));
+        window.handlePasswordPrompt = () => {
+            alert("Password login is being integrated. Please use Magic Link for now.");
+        };
+
         window.handleLogout = () => signOut(auth);
 
         onAuthStateChanged(auth, (user) => {
@@ -112,6 +115,13 @@
                 document.getElementById('dashboard').style.display = 'none';
             }
         });
+
+        if (isSignInWithEmailLink(auth, window.location.href)) {
+            let email = window.localStorage.getItem('emailForSignIn') || window.prompt('Confirm email:');
+            signInWithEmailLink(auth, email, window.location.href)
+                .then(() => { window.localStorage.removeItem('emailForSignIn'); })
+                .catch((error) => alert(error.message));
+        }
     </script>
 </body>
 </html>
