@@ -13,142 +13,91 @@
             color: white; overflow: hidden;
         }
         .container {
-            text-align: center; background: rgba(30, 41, 59, 0.7); padding: 60px 40px;
-            border-radius: 28px; backdrop-filter: blur(20px); width: 90%; max-width: 420px;
-            border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center; background: rgba(30, 41, 59, 0.5); padding: 50px 35px;
+            border-radius: 28px; backdrop-filter: blur(15px); width: 95%; max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        /* PHẦN CHỈNH SỬA LOGO TASK MỚI */
-        .logo-main {
-            font-size: 5.5rem; /* To và đậm chất hơn */
-            font-weight: 800;
-            line-height: 0.8;
-            margin-bottom: 5px;
-            letter-spacing: -3px; /* Ép sát các chữ cái lại tạo cảm giác thương hiệu */
-            background: linear-gradient(to bottom, #ffffff 60%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: block;
+        /* LOGO TASK TO VÀ ĐẸP */
+        .logo-container { 
+            display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; 
+        }
+        .circle {
+            width: 55px; height: 55px; border: 3px solid #38bdf8; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.6rem; font-weight: 800; color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+        }
+        .brand-name { font-size: 3.5rem; font-weight: 700; margin-bottom: 5px; letter-spacing: -1px; }
+        .subtitle { font-size: 0.9rem; color: #38bdf8; margin-bottom: 35px; letter-spacing: 1px; }
+
+        /* INPUT FIELDS TRẮNG HIỆN ĐẠI */
+        .input-group { position: relative; margin-bottom: 15px; }
+        .input-field {
+            width: 100%; padding: 15px; border-radius: 10px; border: none;
+            background: #ffffff; color: #1e293b; font-size: 1rem; outline: none;
+        }
+        .eye-icon {
+            position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+            cursor: pointer; color: #1e293b; display: flex;
         }
 
-        .brand-name { 
-            font-size: 3.5rem; 
-            font-weight: 700; 
-            margin-top: -5px;
-            margin-bottom: 5px; 
-            letter-spacing: -1px;
-            color: #ffffff;
+        /* ERROR MESSAGE */
+        .error-text {
+            color: #ef4444; font-size: 0.85rem; text-align: left;
+            margin: -10px 0 15px 5px; display: none;
         }
 
-        .subtitle { 
-            font-size: 0.95rem; 
-            color: #38bdf8; /* Màu xanh cyan sáng */
-            margin-bottom: 40px; 
-            letter-spacing: 1px;
-            font-weight: 400;
-        }
-
-        .input-box {
-            width: 100%; padding: 16px; margin-bottom: 18px; border-radius: 12px; border: none;
-            background: rgba(255, 255, 255, 0.05); color: #fff; text-align: center; font-size: 1rem; outline: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.3s;
-        }
-        .input-box:focus { border-color: #38bdf8; background: rgba(255, 255, 255, 0.1); }
-
-        .btn {
-            width: 100%; padding: 16px; border: none; border-radius: 12px; background: #0284c7;
+        /* BUTTONS */
+        .btn-signin {
+            width: 100%; padding: 15px; border: none; border-radius: 10px; background: #1e7a8a;
             color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            font-size: 1rem;
+            display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 1.1rem;
         }
-        .btn:hover { background: #0ea5e9; transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3); }
+        .btn-signin:hover { background: #16606d; transform: translateY(-2px); }
 
-        .footer-links { margin-top: 35px; font-size: 0.85rem; color: #94a3b8; line-height: 1.8; }
-        .footer-links a { color: #38bdf8; text-decoration: none; cursor: pointer; font-weight: 500; }
-        .footer-links a:hover { text-decoration: underline; }
-
-        .operated-by { margin-top: 40px; font-size: 0.75rem; color: rgba(148, 163, 184, 0.4); letter-spacing: 0.5px; }
-        #dashboard { display: none; }
+        .footer-links { margin-top: 30px; font-size: 0.85rem; color: #94a3b8; line-height: 1.8; }
+        .footer-links a { color: #38bdf8; text-decoration: none; font-weight: 600; cursor: pointer; }
+        
+        .operated-by { margin-top: 35px; font-size: 0.75rem; color: rgba(148, 163, 184, 0.3); }
     </style>
 </head>
 <body>
 
-    <div id="login-page" class="container">
-        <h1 class="logo-main">TASK</h1>
+    <div class="container">
+        <div class="logo-container">
+            <div class="circle">T</div><div class="circle">A</div><div class="circle">S</div><div class="circle">K</div>
+        </div>
         <div class="brand-name">Times</div>
         <div class="subtitle">By invitation only</div>
         
-        <input type="email" id="user-email" class="input-box" placeholder="Email*">
-        <button id="magic-btn" class="btn" onclick="handleMagicLink()">🔗 Request a magic link</button>
+        <div class="input-group">
+            <input type="email" id="email" class="input-field" placeholder="Email*">
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="password" class="input-field" placeholder="Password*">
+            <span class="eye-icon" id="toggleEye">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+            </span>
+        </div>
+        <div id="error-msg" class="error-text">Missing password</div>
+
+        <a href="#" style="color:#38bdf8; text-decoration:none; font-size:0.9rem; display:block; margin-bottom:20px;">Forgot password?</a>
+
+        <button class="btn-signin" id="signInBtn">Sign in</button>
         
         <div class="footer-links">
-            For existing users, get started by requesting a <br>
-            magic link via email or <a onclick="handlePasswordPrompt()">inputting password</a><br>
+            For existing users, get started by inputting email and password or <a href="#">requesting magic link</a><br>
             New account? <a href="request.html">Request an invite</a>
         </div>
         
         <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
     </div>
 
-    <div id="dashboard" class="container">
-        <h2 id="welcome-msg">Welcome!</h2>
-        <button class="btn" style="background: #ef4444; margin-top: 20px;" onclick="handleLogout()">Sign Out</button>
-        <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
-    </div>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-        import { getAuth, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyDxbNqqxoWr9nBMYujSXnqD-KnYPoOPMd0", 
-            authDomain: "tasktimes-vn.firebaseapp.com",
-            projectId: "tasktimes-vn",
-            storageBucket: "tasktimes-vn.firebasestorage.app",
-            messagingSenderId: "561471525471",
-            appId: "1:561471525471:web:45f9ec52ac1c2f1fa7c1ea",
-            measurementId: "G-W2S1N7DHSF"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-
-        window.handleMagicLink = () => {
-            const email = document.getElementById('user-email').value;
-            if(!email) return alert("Please enter your email!");
-            sendSignInLinkToEmail(auth, email, {
-                url: window.location.origin + window.location.pathname,
-                handleCodeInApp: true,
-            }).then(() => {
-                window.localStorage.setItem('emailForSignIn', email);
-                alert("Success! Check your email.");
-            }).catch(err => alert(err.message));
-        };
-
-        window.handlePasswordPrompt = () => {
-            alert("Password login is coming soon. Please use Magic Link.");
-        };
-
-        window.handleLogout = () => signOut(auth);
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('login-page').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('welcome-msg').innerText = "Hello, " + (user.displayName || user.email);
-            } else {
-                document.getElementById('login-page').style.display = 'block';
-                document.getElementById('dashboard').style.display = 'none';
-            }
-        });
-
-        if (isSignInWithEmailLink(auth, window.location.href)) {
-            let email = window.localStorage.getItem('emailForSignIn') || window.prompt('Confirm email:');
-            signInWithEmailLink(auth, email, window.location.href)
-                .then(() => { window.localStorage.removeItem('emailForSignIn'); })
-                .catch((error) => alert(error.message));
-        }
-    </script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
