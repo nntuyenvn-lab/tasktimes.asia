@@ -3,42 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskTimes | Login</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>GCD | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Major+Mono+Display&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             height: 100vh; display: flex; justify-content: center; align-items: center;
             background: radial-gradient(circle at center, #1e3c72 0%, #0f2027 100%);
-            color: white; overflow: hidden;
+            color: white; font-family: 'Poppins', sans-serif; overflow: hidden;
         }
         .container {
-            text-align: center; background: rgba(44, 62, 80, 0.5); padding: 40px 30px;
-            border-radius: 25px; backdrop-filter: blur(15px); width: 90%; max-width: 400px;
+            text-align: center; background: rgba(44, 62, 80, 0.5); padding: 50px 30px;
+            border-radius: 25px; backdrop-filter: blur(15px); width: 90%; max-width: 450px;
             border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
-        .logo-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; }
-        .circle {
-            width: 42px; height: 42px; border: 2px solid #00d2ff; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-            font-size: 1.4rem; font-weight: 600; color: #00d2ff;
-        }
-        .brand-name { font-size: 2.5rem; font-weight: 600; margin-bottom: 5px; letter-spacing: 1px; }
-        .subtitle { font-size: 0.85rem; color: #00d2ff; margin-bottom: 30px; }
+        .logo-container { display: flex; justify-content: center; align-items: baseline; gap: 5px; margin-bottom: 25px; }
+        .logo-text { font-family: 'Major Mono Display', monospace; font-size: 3rem; color: #fff; font-weight: normal; }
+        .logo-small { font-family: 'Major Mono Display', monospace; font-size: 1.5rem; color: #fff; text-transform: lowercase; }
+        
+        .brand-name { font-size: 2.8rem; font-weight: 600; margin-bottom: 8px; letter-spacing: 1px; color: #00d2ff; }
+        .subtitle { font-size: 1.1rem; color: #00d2ff; margin-bottom: 35px; }
+        
         .input-box {
-            width: 100%; padding: 14px; margin-bottom: 15px; border-radius: 10px; border: none;
-            background: #fff; color: #333; text-align: center; font-size: 1rem; outline: none;
+            width: 100%; padding: 16px; margin-bottom: 18px; border-radius: 12px; border: none;
+            background: #fff; color: #333; text-align: center; font-size: 1.1rem; outline: none;
         }
+        .input-box::placeholder { color: #999; }
+        
         .btn {
-            width: 100%; padding: 14px; border: none; border-radius: 10px; background: #00a8ff;
-            color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 16px; border: none; border-radius: 12px; background: #00a8ff;
+            color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
         .btn:hover { background: #00d2ff; transform: translateY(-2px); }
         .btn:disabled { background: #555; cursor: not-allowed; }
-        .footer-links { margin-top: 25px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); line-height: 1.6; }
-        .footer-links a { color: #00d2ff; text-decoration: none; cursor: pointer; }
-        .operated-by { margin-top: 25px; font-size: 0.75rem; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.5px; }
+        
+        .footer-links { margin-top: 30px; font-size: 0.95rem; color: rgba(255, 255, 255, 0.7); line-height: 1.7; }
+        .footer-links a { color: #00d2ff; text-decoration: none; cursor: pointer; font-weight: normal; }
+        .operated-by { margin-top: 30px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.4); letter-spacing: 0.5px; }
+        
         #dashboard { display: none; }
         .user-pic { width: 70px; border-radius: 50%; border: 2px solid #00d2ff; margin-bottom: 10px; }
     </style>
@@ -47,16 +50,20 @@
 
     <div id="login-page" class="container">
         <div class="logo-container">
-            <div class="circle">T</div><div class="circle">A</div><div class="circle">S</div><div class="circle">K</div>
+            <span class="logo-text">Gcd</span><span class="logo-small">ee</span>
         </div>
-        <div class="brand-name">Times</div>
+        <div class="brand-name">GCD</div>
         <div class="subtitle">By invitation only</div>
+        
         <input type="email" id="user-email" class="input-box" placeholder="Email*">
         <button id="magic-btn" class="btn" onclick="handleMagicLink()">🔗 Request a magic link</button>
+        
         <div class="footer-links">
             For existing users, get started by requesting a <br>
-            magic link via email or <a onclick="handleGoogleLogin()">sign in with Google</a>
+            magic link via email or <a onclick="handleGoogleLogin()">sign in with Google</a><br>
+            New account? <a href="#">Request an invite</a>
         </div>
+        
         <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
     </div>
 
