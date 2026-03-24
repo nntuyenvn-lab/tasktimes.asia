@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTimes | Request an Invite</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body {
+            height: 100vh; display: flex; justify-content: center; align-items: center;
+            background: radial-gradient(circle at center, #1e3c72 0%, #0f2027 100%);
+            color: white; overflow: hidden;
+        }
+        .container {
+            text-align: center; background: rgba(44, 62, 80, 0.4); padding: 50px 30px;
+            border-radius: 25px; backdrop-filter: blur(15px); width: 90%; max-width: 420px;
+            border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+        .logo-container { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+        .circle {
+            width: 42px; height: 42px; border: 2px solid #00d2ff; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.2rem; font-weight: 600; color: #00d2ff;
+        }
+        .brand-name { font-size: 3rem; font-weight: 600; margin-bottom: 5px; letter-spacing: 1px; }
+        .subtitle { font-size: 0.9rem; color: #00d2ff; margin-bottom: 35px; }
+        .input-box {
+            width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 10px; border: none;
+            background: rgba(255, 255, 255, 0.1); color: #fff; text-align: center; font-size: 1rem; outline: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .btn {
+            width: 100%; padding: 15px; border: none; border-radius: 10px; background: #00a8ff;
+            color: white; font-weight: 600; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn:hover { background: #00d2ff; transform: translateY(-2px); }
+        .footer-links { margin-top: 30px; font-size: 0.85rem; color: rgba(255, 255, 255, 0.7); line-height: 1.8; }
+        .footer-links a { color: #00d2ff; text-decoration: none; cursor: pointer; }
+        .operated-by { margin-top: 35px; font-size: 0.8rem; color: rgba(255, 255, 255, 0.3); letter-spacing: 0.5px; }
+        #status-msg { margin-top: 15px; font-size: 0.9rem; display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-container">
+            <div class="circle">T</div><div class="circle">A</div><div class="circle">S</div><div class="circle">K</div>
+        </div>
+        <div class="brand-name">Times</div>
+        <div class="subtitle">Request an Invite</div>
+        
+        <input type="text" id="req-name" class="input-box" placeholder="Full Name*">
+        <input type="email" id="req-email" class="input-box" placeholder="Email Address*">
+        <button id="submit-btn" class="btn" onclick="handleRequestSubmit()">📩 Submit Request</button>
+        
+        <div id="status-msg"></div>
+
+        <div class="footer-links">
+            Already have an account? <br>
+            <a href="index.html">Sign in here</a>
+        </div>
+        
+        <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDxbNqqxoWr9nBMYujSXnqD-KnYPoOPMd0", 
+            authDomain: "tasktimes-vn.firebaseapp.com",
+            projectId: "tasktimes-vn",
+            storageBucket: "tasktimes-vn.firebasestorage.app",
+            messagingSenderId: "561471525471",
+            appId: "1:561471525471:web:45f9ec52ac1c2f1fa7c1ea",
+            measurementId: "G-W2S1N7DHSF"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.handleRequestSubmit = async () => {
+            const name = document.getElementById('req-name').value;
+            const email = document.getElementById('req-email').value;
+            const msgEl = document.getElementById('status-msg');
+
+            if (!name || !email) return alert("Please fill in all fields!");
+
+            try {
+                await addDoc(collection(db, "inviteRequests"), {
+                    name: name,
+                    email: email,
+                    timestamp: serverTimestamp()
+                });
+                msgEl.innerText = "✨ Request sent successfully!";
+                msgEl.style.display = "block";
+                msgEl.style.color = "#2ecc71";
+            } catch (e) {
+                alert("Error: " + e.message);
+            }
+        };
+    </script>
+</body>
+</html>
