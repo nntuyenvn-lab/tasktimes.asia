@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTimes | Personal Productivity OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at 20% 30%, #1e1b4b 0%, #0f172a 50%, #020617 100%);
+            color: #ffffff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image: radial-gradient(#ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .hero-section {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 850px;
+            padding: 20px;
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        /* --- LOGO TASK & TIMES JUMP EFFECT --- */
+        .logo-container, .times-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .letter-box, .times-letter {
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* Hình khối cho TASK */
+        .letter-box {
+            width: 60px;
+            height: 60px;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Định dạng cho chữ TIMES */
+        .times-container {
+            font-size: clamp(4rem, 15vw, 8.5rem);
+            font-weight: 800;
+            letter-spacing: -4px;
+            line-height: 0.85;
+            margin-bottom: 20px;
+        }
+
+        .times-letter {
+            background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* HIỆU ỨNG NHẢY VÀ ĐỔI MÀU CHO CẢ HAI */
+        .letter-box:hover, .times-letter:hover {
+            transform: translateY(-18px) scale(1.15);
+            -webkit-text-fill-color: #38bdf8; /* Đổi màu chữ Times */
+            color: #0f172a; /* Đổi màu chữ Task */
+            background-color: #38bdf8; /* Đổi nền vòng tròn Task */
+            border-color: #38bdf8;
+            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+        }
+
+        .times-letter:hover {
+            background: none; /* Tắt gradient khi hover để hiện màu Cyan */
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+        }
+
+        /* --- STATUS & DESCRIPTION --- */
+        .status-tag {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #38bdf8;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            margin-bottom: 30px;
+            display: block;
+            animation: blinker 2s linear infinite;
+        }
+
+        .mission-desc {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: #94a3b8;
+            max-width: 650px;
+            margin: 0 auto 45px;
+            line-height: 1.8;
+            font-weight: 300;
+        }
+
+        .btn-test-mode {
+            padding: 18px 50px;
+            background: #ffffff;
+            color: #020617;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.4s ease;
+            margin-bottom: 70px;
+        }
+
+        .btn-test-mode:hover {
+            transform: translateY(-5px);
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        /* --- FOOTER: TIME BLOCK --- */
+        .footer-group {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 30px;
+        }
+
+        #digital-clock {
+            font-size: clamp(2.5rem, 7vw, 3.2rem);
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-bottom: 0px;
+        }
+
+        #date-display {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        .operated-info {
+            font-size: 0.7rem;
+            color: rgba(148, 163, 184, 0.6);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes blinker { 50% { opacity: 0.3; } }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <div class="logo-container">
+            <div class="letter-box">T</div>
+            <div class="letter-box">A</div>
+            <div class="letter-box">S</div>
+            <div class="letter-box">K</div>
+        </div>
+
+        <div class="times-container">
+            <span class="times-letter">T</span>
+            <span class="times-letter">i</span>
+            <span class="times-letter">m</span>
+            <span class="times-letter">e</span>
+            <span class="times-letter">s</span>
+        </div>
+
+        <span class="status-tag">Public release coming soon</span>
+        
+        <p class="mission-desc">
+            The next-generation <strong>Personal Productivity OS</strong>. 
+            Seamlessly integrating tools, documents, and AI-driven insights.
+        </p>
+
+        <a href="https://trial.tasktimes.asia" class="btn-test-mode">
+            Enter TEST MODE
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+
+        <div class="footer-group">
+            <div id="digital-clock">00:00:00</div>
+            <div id="date-display">...</div>
+            <div class="operated-info">OPERATED BY NGUYEN NGOC TUYEN</div>
+        </div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('digital-clock').textContent = now.toLocaleTimeString('en-GB');
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date-display').textContent = now.toLocaleDateString('en-US', options);
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
