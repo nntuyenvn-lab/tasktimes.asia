@@ -114,6 +114,7 @@
         .avatar-img {
             width: clamp(55px, 10vw, 75px); height: clamp(55px, 10vw, 75px); border-radius: 50%;
             border: 2px solid rgba(56, 189, 248, 0.5); object-fit: cover;
+            background: #0f172a; /* Màu nền dự phòng */
         }
         .role-label { 
             font-size: 0.65rem; color: #38bdf8; text-transform: uppercase; 
@@ -149,7 +150,6 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes blinker { 50% { opacity: 0.3; } }
 
-        /* --- MOBILE ADJUSTMENTS --- */
         @media (max-width: 768px) {
             .custom-footer { 
                 flex-direction: column; 
@@ -189,7 +189,7 @@
 
         <div class="custom-footer">
             <div class="founder-box">
-                <img src="ava-web.jpg" alt="Founder" class="avatar-img">
+                <img src="/en/ava-web.jpg" alt="Founder" class="avatar-img" onerror="this.src='https://raw.githubusercontent.com/nntuyenvn-lab/nntuyenvn-lab.github.io/main/en/ava-web.jpg'">
                 <div class="founder-text">
                     <div class="role-label">Founder & Developer</div>
                     <div class="founder-name">NGUYEN NGOC TUYEN</div>
