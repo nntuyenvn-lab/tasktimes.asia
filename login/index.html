@@ -16,38 +16,19 @@
             text-align: center; background: rgba(30, 41, 59, 0.5); padding: 50px 35px;
             border-radius: 28px; backdrop-filter: blur(15px); width: 95%; max-width: 420px;
             border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.8s ease-out;
         }
 
         /* --- PHẦN LOGO TASK --- */
-        .logo-container { 
-            display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; 
-        }
+        .logo-container { display: flex; justify-content: center; gap: 12px; margin-bottom: 20px; }
         .circle {
-            width: 55px; height: 55px; 
-            border: 3px solid #38bdf8; border-radius: 50%;
+            width: 55px; height: 55px; border: 3px solid #38bdf8; border-radius: 50%;
             display: flex; justify-content: center; align-items: center;
             font-size: 1.6rem; font-weight: 800; color: #38bdf8;
             box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-            transition: 0.3s ease;
-            cursor: pointer;
-        }
-        .circle:hover {
-            transform: scale(1.1);
-            background: rgba(56, 189, 248, 0.1);
         }
 
-        /* Hiệu ứng nhảy cho chữ Times */
-        .brand-name { 
-            font-size: 3.5rem; font-weight: 700; margin-bottom: 5px; letter-spacing: -1px; 
-            transition: 0.3s ease;
-            display: inline-block; /* Quan trọng để hiệu ứng scale hoạt động chuẩn */
-            cursor: pointer;
-        }
-        .brand-name:hover {
-            transform: scale(1.1);
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-        }
-
+        .brand-name { font-size: 3.5rem; font-weight: 700; margin-bottom: 5px; letter-spacing: -1px; }
         .subtitle { font-size: 0.9rem; color: #38bdf8; margin-bottom: 35px; letter-spacing: 1px; }
 
         .input-box {
@@ -66,10 +47,17 @@
 
         .footer-links { margin-top: 30px; font-size: 0.85rem; color: #94a3b8; line-height: 1.8; }
         .footer-links a { color: #38bdf8; text-decoration: none; cursor: pointer; font-weight: 600; }
-        .footer-links a:hover { text-decoration: underline; }
+        
+        /* Nút Back to Home */
+        .back-home {
+            margin-top: 25px; display: inline-flex; align-items: center; gap: 8px;
+            color: #64748b; text-decoration: none; font-size: 0.8rem; transition: 0.3s;
+        }
+        .back-home:hover { color: #ffffff; }
 
         .operated-by { margin-top: 35px; font-size: 0.75rem; color: rgba(148, 163, 184, 0.3); letter-spacing: 0.5px; }
         #dashboard { display: none; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -85,10 +73,14 @@
         <button id="magic-btn" class="btn" onclick="handleMagicLink()">🔗 Request a magic link</button>
         
         <div class="footer-links">
-            For existing users, get started by requesting a <br>
-            magic link via email or <a onclick="handleGoogleSignIn()">Sign in with Google</a><br>
-            New account? <a href="request.html">Request an invite</a>
+            New account? <a href="/request.html">Request an invite</a><br>
+            Or <a onclick="handleGoogleSignIn()">Sign in with Google</a>
         </div>
+
+        <a href="/en" class="back-home">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Back to Home
+        </a>
         
         <div class="operated-by">Operated by Nguyen Ngoc Tuyen</div>
     </div>
@@ -120,23 +112,19 @@
         window.handleMagicLink = () => {
             const email = document.getElementById('user-email').value;
             if(!email) return alert("Please enter your email!");
-            sendSignInLinkToEmail(auth, email, {
-                url: window.location.origin + window.location.pathname,
+            // Đảm bảo URL quay về đúng trang login sau khi nhấn link email
+            const actionCodeSettings = {
+                url: window.location.origin + '/login',
                 handleCodeInApp: true,
-            }).then(() => {
+            };
+            sendSignInLinkToEmail(auth, email, actionCodeSettings).then(() => {
                 window.localStorage.setItem('emailForSignIn', email);
                 alert("Success! Check your email.");
             }).catch(err => alert(err.message));
         };
 
-        // Hàm xử lý đăng nhập Google
         window.handleGoogleSignIn = () => {
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    console.log("Logged in with Google");
-                }).catch((error) => {
-                    alert("Google Sign-In Error: " + error.message);
-                });
+            signInWithPopup(auth, provider).catch((error) => alert(error.message));
         };
 
         window.handleLogout = () => signOut(auth);
