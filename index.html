@@ -182,5 +182,28 @@
 
 </div>
 
+   <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDxbNqqxoWr9nBMYujSXnqD-KnYPoOPMd0",
+    authDomain: "tasktimes-vn.firebaseapp.com",
+    projectId: "tasktimes-vn",
+    storageBucket: "tasktimes-vn.firebasestorage.app",
+    messagingSenderId: "561471525471",
+    appId: "1:561471525471:web:45f9ec52ac1c2f1fa7c1ea",
+    measurementId: "G-W2S1N7DHSF"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
 </body>
 </html>
